@@ -32,6 +32,12 @@ function createTable() {
   });
 }
 
+function isValidQuery(query) {
+  const allowedQueries = ['SELECT', 'INSERT'];
+  const queryType = query.trim().split(' ')[0].toUpperCase();
+  return allowedQueries.includes(queryType);
+}
+
 const server = http.createServer((req, res) => {
   const { pathname, query } = url.parse(req.url, true);
 
@@ -39,6 +45,11 @@ const server = http.createServer((req, res) => {
     if(pathname === '/patients/'){
       createTable();
       const request = query.request
+      if (!isValidQuery(request)) {
+        res.statusCode = 400;
+        res.end(JSON.stringify("Bad request: Invalid query type"));
+        return;
+      }
       con.query(request, (err, result) => {
         if (err) {
           console.error('Error executing query:', err);
@@ -90,6 +101,11 @@ const server = http.createServer((req, res) => {
         try {
           const data = JSON.parse(body);
           const request = data.request;
+          if (!isValidQuery(request)) {
+            res.statusCode = 400;
+            res.end(JSON.stringify("Bad request: Invalid query type"));
+            return;
+          }
           con.query(request, (err, result) => {
             if (err) {
               console.error('Error executing query:', err);
