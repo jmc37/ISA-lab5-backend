@@ -63,19 +63,21 @@ const server = http.createServer((req, res) => {
         ['Elon Musk', '1999-01-01']
       ];
   
-      let sql = "INSERT INTO patients (name, dateOfBirth) VALUES ($1, $2)";
+      const sql = "INSERT INTO patients (name, dateOfBirth) VALUES ($1, $2)";
   
       data.forEach(record => {
         con.query(sql, [record[0], record[1]], function (err, result) {
           if (err) {
             console.error('Error inserting record:', err);
+            res.end(JSON.stringify('Error inserting record:!'));
+
           }
         });
       });
   
       res.statusCode = 200;
       res.setHeader('Content-Type', 'text/plain');
-      res.end('Data inserted!\n');
+      res.end(JSON.stringify("Table updated!"));
     }
 
     if(pathname === '/add'){
@@ -97,12 +99,12 @@ const server = http.createServer((req, res) => {
             }
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
-            res.end(JSON.stringify(result));
+            res.end(JSON.stringify("Good request"));
           });
         } catch (error) {
           console.error('Error parsing request body:', error);
           res.statusCode = 400;
-          res.end('Bad Request');
+          res.end(JSON.stringify("Bad request"));
         }
       });
     }
