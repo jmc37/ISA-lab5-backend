@@ -1,0 +1,26 @@
+{
+  "name": "isa-lab5-backend",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000I\u0000S\u0000A\u0000-\u0000l\u0000a\u0000b\u00005\u0000-\u0000f\u0000r\u0000o\u0000n\u0000t\u0000e\u0000n\u0000d\u0000\r\u0000 \u0000",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmc37/ISA-lab5-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmc37/ISA-lab5-frontend/issues"
+  },
+  "homepage": "https://github.com/jmc37/ISA-lab5-frontend#readme",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "mysql2": "^3.6.1",
+    "pg": "^8.11.3"
+  }
+}
