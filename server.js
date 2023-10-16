@@ -2,7 +2,7 @@ const { Client } = require('pg');
 const http = require('http');
 const url = require('url');
 
-const hostname = '0.0.0.0,'; // localhost
+const hostname = '0.0.0.0'; // localhost
 const PORT = process.env.PORT || 3030;
 
 const con = new Client({
