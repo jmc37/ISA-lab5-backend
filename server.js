@@ -5,26 +5,6 @@ const url = require('url');
 const hostname = '127.0.0.1'; // localhost
 const PORT = process.env.PORT || 3030;
 
-const con = new Client({
-  user: "root",
-  password: "pDLDQmy1Npw4Hrn660wYUoNEsWEpFbZn",
-  host: "dpg-cklg9bqv7m0s739cpme0-a.oregon-postgres.render.com",
-  database: "lab5_xpv0",
-  port: 5432, // Default PostgreSQL port
-  ssl: true, // Enable SSL
-});
-
-con.on('error', (err) => {
-  console.error('PostgreSQL client error:', err);
-});
-
-con.connect()
-  .then(() => {
-    console.log("Connected to PostgreSQL!");
-    createTable();
-  })
-  .catch(err => console.error('Error connecting:', err));
-
 function createTable() {
   const sql = "CREATE TABLE IF NOT EXISTS patients (patientid SERIAL PRIMARY KEY, name VARCHAR(100), dateOfBirth DATE)";
   con.query(sql, function (err, result) {
@@ -45,7 +25,26 @@ const server = http.createServer((req, res) => {
     "Access-Control-Allow-Methods":"*"
   }) 
   const { pathname, query } = url.parse(req.url, true);
-
+  const con = new Client({
+    user: "root",
+    password: "pDLDQmy1Npw4Hrn660wYUoNEsWEpFbZn",
+    host: "dpg-cklg9bqv7m0s739cpme0-a.oregon-postgres.render.com",
+    database: "lab5_xpv0",
+    port: 5432, // Default PostgreSQL port
+    ssl: true, // Enable SSL
+  });
+  
+  con.on('error', (err) => {
+    console.error('PostgreSQL client error:', err);
+  });
+  
+  con.connect()
+    .then(() => {
+      console.log("Connected to PostgreSQL!");
+      createTable();
+    })
+    .catch(err => console.error('Error connecting:', err));
+  
   if(req.method === 'GET'){
     if(pathname === '/patients/'){
       createTable();
