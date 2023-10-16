@@ -3,7 +3,7 @@ const http = require('http');
 const url = require('url');
 
 const hostname = '127.0.0.1'; // localhost
-const port = 3000;
+const PORT = process.env.PORT || 3030;
 
 const con = new Client({
   user: "root",
@@ -39,6 +39,11 @@ function isValidQuery(query) {
 }
 
 const server = http.createServer((req, res) => {
+  res.writeHead(200,{
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin":"*",
+    "Access-Control-Allow-Methods":"*"
+  }) 
   const { pathname, query } = url.parse(req.url, true);
 
   if(req.method === 'GET'){
@@ -58,7 +63,6 @@ const server = http.createServer((req, res) => {
           return;
         }
         res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(result.rows));
       });
     }
@@ -87,7 +91,11 @@ const server = http.createServer((req, res) => {
       });
   
       res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/plain');
+      res.writeHead(200,{
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin":"*",
+        "Access-Control-Allow-Methods":"*"
+      })
       res.end(JSON.stringify("Table updated!"));
     }
 
@@ -114,7 +122,11 @@ const server = http.createServer((req, res) => {
               return;
             }
             res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
+            res.writeHead(200,{
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin":"*",
+              "Access-Control-Allow-Methods":"*"
+            })
             res.end(JSON.stringify("Good request"));
           });
         } catch (error) {
